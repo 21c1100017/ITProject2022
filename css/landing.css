@@ -15,6 +15,10 @@ body {
     font-size: 20px;
 }
 
+.leftNavigation nav ul li {
+    list-style: none;
+}
+
 .content {
     flex: 1;
     background-color: #fff;
@@ -24,13 +28,11 @@ body {
 }
 
 .content .sdgs {
-    margin-top: 100px;
-    width: 500px;
+    width: 1000px;
     height: auto;
 }
 
 .content h2 {
-    margin-top: 100px;
+    margin-top: 50px;
     font-size: 30px;
-    margin-bottom: 50px;
 }
