@@ -1,6 +1,6 @@
 <?php
 
-$db_name = "test";
+$db_name = "sns";
 $db_user = "st";
 $db_host = "localhost";
 $db_password = "1234";
@@ -14,11 +14,11 @@ try{
     );
 
 }catch(\PDOException $e){
-    echo "しっぱいしたー";
+    echo $e->getMessage();
     exit;
 }
 
-$stmt = $mysql->prepare("SELECT * FROM a;");
+$stmt = $mysql->prepare("SELECT * FROM `follow`;");
 $stmt->execute();
 $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
