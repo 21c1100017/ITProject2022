@@ -26,7 +26,7 @@ if (!empty($_POST)) {
         $login = $db->prepare('SELECT * FROM members WHERE email=? AND password=?');
         $login->execute(array(
             $_POST['email'],
-            sha1($_POST['password'])
+            sha1($_POST['password']) //sha1はパスワード系の処理で推奨されていない関数
         ));
         $member = $login->fetch();
             //ログイン成功時
