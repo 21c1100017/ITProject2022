@@ -12,7 +12,7 @@ if (!empty($_POST)) {
     echo $ret = $statement -> execute(array(
         $_SESSION['join']['name'],
         $_SESSION['join']['email'],
-        sha1($_SESSION['join']['password']),
+        sha1($_SESSION['join']['password']), //sha1はパスワード系の処理で推奨されていない
         $_SESSION['join']['image']
     ));
     unset($_SESSION['join']);
