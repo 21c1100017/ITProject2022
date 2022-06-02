@@ -12,7 +12,7 @@ if (!empty($_POST)) {
     echo $ret = $statement -> execute(array(
         $_SESSION['join']['name'],
         $_SESSION['join']['email'],
-        sha1($_SESSION['join']['password']), //sha1はパスワード系の処理で推奨されていない
+        password_hash($_SESSION['join']['password'] , PASSWORD_BCRYPT),
         $_SESSION['join']['image']
     ));
     unset($_SESSION['join']);
@@ -39,8 +39,9 @@ if (!empty($_POST)) {
         </dd>
         <dt>写真など</dt>
         <dd>
-        <img src="../member_picture/<?php echo htmlspecialchars($_SESSION['join']['image'] . ENT_QUOTES); ?>" width="100" alt="" />
+        <img src="../member_picture/<?php echo htmlspecialchars($_SESSION['join']['image'] . ENT_QUOTES); ?>" width="100" heifht="100" alt="" />
         </dd>
     </dl>
     <div><a href="index.php?action=rewrite">&laquo;&nbsp;書き直す</a> |   <input type="submit" value="登録する" /></div>
 </form>
+

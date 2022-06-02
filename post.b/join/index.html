@@ -8,6 +8,8 @@
 </head>
 <body>
     <p>次のフォームに必要事項をご記入ください</p>
+    <p>登録済みの方はこちらへ</p>
+    <a href="../login/login.php">ログイン</a>
     <form action="" method="post" enctype="multipart/form-data">
         <dl>
             <dt>ニックネーム<span class="required">必須</span></dt>
@@ -33,7 +35,10 @@
                 <p class="error">{{err_image}}</p>
             </dd>
         </dl>
-        <div><input type="submit" value="入力内容を確認する" /></div>
+        <div>
+            <form action="" method="POST"></form>
+            <input type="submit" value="入力内容を確認する" />
+        </div>
     </form>
 </body>
 </html>

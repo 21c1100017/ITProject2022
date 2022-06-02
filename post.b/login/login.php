@@ -11,6 +11,7 @@ if (!empty($_COOKIE['token'])) {
 $keywords = [
     'post_email' => '',
     'post_password' => '',
+    'Password_valid'=> '',
     'err_failed' => ''
 ];
 
@@ -23,14 +24,16 @@ $error = false;
 if (!empty($_POST)) {
     //ログインの処理
     if($_POST['email'] != '' && $_POST['password'] != '') {
-        $login = $db->prepare('SELECT * FROM members WHERE email=? AND password=?');
+        $login = $db->prepare('SELECT * FROM members WHERE email=? ');
         $login->execute(array(
-            $_POST['email'],
-            sha1($_POST['password']) //sha1はパスワード系の処理で推奨されていない関数
+            $_POST['email']
         ));
         $member = $login->fetch();
+        if (password_verify($_POST['password'],$member['password'])) {
+            $keywords['Password_valid'] = true;
+        }
             //ログイン成功時
-            if($member) {
+            if($keywords['Password_valid']) {
                 $_SESSION['id'] = $member['id'];
                 $_SESSION['time'] = time();
 

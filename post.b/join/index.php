@@ -2,11 +2,17 @@
 session_start();
 require('../db/dbconnect.php');
 
+if (empty($_SESSION['join'])) {
+    $_SESSION['join']['name'] = "";
+    $_SESSION['join']['email'] = "";
+    $_SESSION['join']['password'] = "";
+}
+
 // index.html内のキーワードをまとめた配列
 $keywords = [
-    'post_name' => '',
-    'post_email' => '',
-    'post_password' => '',
+    'post_name' => $_SESSION['join']['name'],
+    'post_email' => $_SESSION['join']['email'],
+    'post_password' => $_SESSION['join']['password'],
     'err_name' => '',
     'err_email' => '',
     'err_password' => '',
@@ -18,12 +24,6 @@ $keywords = [
 // エラーが発生したかどうか判定するフラグ
 $error = false;
 $duplicatecheck = false;
-
-//書き直し
-if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'rewrite') {
-    $_POST = $_SESSION['join'];
-    $error = true;
-}
 
 if (!empty($_POST)) {
 
@@ -69,10 +69,10 @@ if (!empty($_POST)) {
     }
 
     if (!$error) {
-        $member = $db->prepare ('SELECT COUNT(*) AS cnt FROM members WHERE email=?'); //SELECT FROM で良さそう
+        $member = $db->prepare ('SELECT * FROM members WHERE email=?');
         $member -> execute(array($_POST['email']));
         $record = $member->fetch();
-        if($record['cnt'] > 0) {
+        if($record) {
             $keywords['err_email'] = '指定されたメールアドレスはすでに登録されています';
             $duplicatecheck = true;
         }
@@ -82,7 +82,7 @@ if (!empty($_POST)) {
     if (!$error && !$duplicatecheck) {
         //画像をアップロードする
         $image = date('YmdHis') . $_FILES['image']['name'];
-        move_uploaded_file($_FILES['image']['tmp_name'] , '../ member_picture/'. $image);
+        move_uploaded_file($_FILES['upload_image']['tmp_name'] , '../member_picture/'. $image);
 
         $_SESSION['join'] = $_POST;
         $_SESSION['join']['image'] = $image;
