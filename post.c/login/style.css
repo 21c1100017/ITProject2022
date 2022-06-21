@@ -1,0 +1,58 @@
+@import url(reset.css);
+
+body {
+    background-color: white;
+    width: auto;
+    margin: 5% 10% 5% 10%;
+    background: url(../login/13854.jpg) center/cover no-repeat;
+}
+
+h1{
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.418);
+    margin: 1% 30%;
+    font-size: 50px;
+}
+
+p{
+    text-align: center;
+    color: white;
+}
+span{
+    color: red;
+}
+
+.new{
+    text-align: center;
+    background-color: white;
+    margin: 1% 46%;
+}
+
+dt , dl{
+    text-align: center;
+}
+
+.login{
+    text-align: center;
+}
+
+.box{
+    padding: 4% 4% 6% 1%;
+    margin: 5% 32% 5% 32%;
+    font-weight: bold;
+    border: solid 1px #000000;
+    background: #ffffff4c
+}
+.mail{
+    margin: 1% 1% 10% 1%;
+}
+
+.password{
+    margin: 1% 1% 10% 1%;
+}
+
+.log{
+    text-align: center;
+    margin: auto;
+}
