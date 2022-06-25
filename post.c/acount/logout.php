@@ -10,4 +10,4 @@ if (isset($_COOKIE[session_name()])) {
 setcookie('token', '', time() - 42000, '/');
 //セッション削除
 session_destroy();
-header('Location: ../login/login.php');
+header('Location: ../login/index.php');

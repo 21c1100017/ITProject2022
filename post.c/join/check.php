@@ -13,8 +13,9 @@ if (!empty($_POST)) {
         $_SESSION['join']['name'],
         $_SESSION['join']['email'],
         password_hash($_SESSION['join']['password'] , PASSWORD_BCRYPT),
-        $_SESSION['join']['image']
+        $_SESSION['join']['img_name']
     ));
+    move_uploaded_file($_SESSION['join']['image'], '../member_picture/' . $_SESSION['join']['img_name']);
     unset($_SESSION['join']);
 
     header('Location: thanks.php');
@@ -39,8 +40,12 @@ if (!empty($_POST)) {
         </dd>
         <dt>写真など</dt>
         <dd>
-        <img src="../member_picture/<?php echo htmlspecialchars($_SESSION['join']['image'] , ENT_QUOTES); ?>" width="100" heifht="100" alt="" />
+        <?php echo '<img src="data:' . $_SESSION['join']['path'] . ';base64,'.$_SESSION['join']['path_img'].'" width="100" heifht="100" alt="" >' ?>
         </dd>
     </dl>
     <div><a href="index.php?action=rewrite">&laquo;&nbsp;書き直す</a> |   <input type="submit" value="登録する" /></div>
 </form>
+
+<?php 
+//var_dump($_SESSION['join']['image']);
+?>

@@ -81,11 +81,23 @@ if (!empty($_POST)) {
     // $error != true の省略
     if (!$error && !$duplicatecheck) {
         //画像をアップロードする
-        $image = date('YmdHis') . $_FILES['image']['name'];
+        /*$image = date('YmdHis') . $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'] , '../member_picture/'. $image);
 
+        $_SESSION['join']['image'] = $image;*/
+        $fp = fopen($_FILES['image']['tmp_name'], "rb");
+        $img = fread($fp, filesize($_FILES['image']['tmp_name']));
+        fclose($fp);
+
+        $enc_img = base64_encode($img);
+
+        $imginfo = getimagesize('data:application/octet-stream;base64,' . $enc_img);
+
         $_SESSION['join'] = $_POST;
-        $_SESSION['join']['image'] = $image;
+        $_SESSION['join']['path'] = $imginfo['mime'];
+        $_SESSION['join']['path_img'] = $enc_img;
+        $_SESSION['join']['image'] = $_FILES['image']['tmp_name'];
+        $_SESSION['join']['img_name'] = date('YmdHis') . $fileName;
         header('Location: check.php');
         exit();
     }else{
@@ -94,7 +106,7 @@ if (!empty($_POST)) {
 }
 
 // index.htmlのファイルを文字列として取得
-$html = file_get_contents('./index.html');
+$html = file_get_contents('./join.html');
 
 // index.html内のキーワード( {{}}で囲まれてるやつ )をそれぞれの変数の中身と置き換える
 foreach($keywords as $key => $value) {

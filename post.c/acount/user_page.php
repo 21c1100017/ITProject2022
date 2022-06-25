@@ -4,6 +4,7 @@ require('../db/dbconnect.php');
 
 $keywords = [
     'member_name' => '',
+    'member_picture' => '',
 ];
 
 if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
@@ -15,10 +16,11 @@ if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
     $member = $members -> fetch();
 } else {
     //ログインしていない
-    header('Location: ../login/login.php');
+    header('Location: ../login/index.php');
 }
 
 $keywords['member_name'] = $member['name'];
+$keywords['member_picture'] = $member['picture'];
 
 //html接続
 $html = file_get_contents('./user_page.html');
@@ -28,4 +30,6 @@ foreach($keywords as $key => $value) {
 }
 
 print($html);
+
+var_dump($member['picture']);
 

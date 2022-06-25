@@ -1,5 +1,5 @@
 <?php 
-require('../db/dbconnect.php');
+require(__DIR__ . '/../db/dbconnect.php');
 
 //トークン発行
 function setLoginToken ($user_id) {
@@ -38,7 +38,7 @@ function auto_login() {
         session_regenerate_id(true);
         $_SESSION['id'] = $pass['id'];
         $_SESSION['time'] = time();
-        header('Location: ../acount/user_page.php');
+        header('Location: acount/user_page.php');
         exit();
     }
 }
