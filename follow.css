@@ -1,0 +1,29 @@
+/*
+button{
+    background-color: <?=$bgColor;?>;
+    color: <?=$color;?>;
+    font-size: 1em;
+    font-family: "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+*/
+
+button {
+    font-size: 1em;
+    font-family: "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+button.ok {
+    color: white;
+    background-color: black;
+    
+}
+
+button.not {
+
+    color: black;
+    background-color: white;
+}
