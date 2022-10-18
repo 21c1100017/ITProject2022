@@ -12,7 +12,8 @@ $keywords = [
     'post_email' => '',
     'post_password' => '',
     'Password_valid'=> '',
-    'err_faloginiled' => ''
+    'err_faloginiled' => '',
+    'err_failed' => ''
 ];
 
 //エラー発生フラグ
@@ -41,7 +42,7 @@ if (!empty($_POST)) {
                     if ($_POST['save'] == 'on') {
                         setLoginToken($member['id']);
                     }
-
+                //session_regenerate_id(true);
                 header('Location: ../acount/user_page.php');
                 exit();
             } else {

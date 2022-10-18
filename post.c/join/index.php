@@ -81,23 +81,25 @@ if (!empty($_POST)) {
     // $error != true の省略
     if (!$error && !$duplicatecheck) {
         //画像をアップロードする
-        /*$image = date('YmdHis') . $_FILES['image']['name'];
-        move_uploaded_file($_FILES['image']['tmp_name'] , '../member_picture/'. $image);
+        if (!empty($fileName)) {
+            $fp = fopen($_FILES['image']['tmp_name'], "rb");
+            $img = fread($fp, filesize($_FILES['image']['tmp_name']));
+            fclose($fp);
 
-        $_SESSION['join']['image'] = $image;*/
-        $fp = fopen($_FILES['image']['tmp_name'], "rb");
-        $img = fread($fp, filesize($_FILES['image']['tmp_name']));
-        fclose($fp);
+            $enc_img = base64_encode($img);
 
-        $enc_img = base64_encode($img);
+            $imginfo = getimagesize('data:application/octet-stream;base64,' . $enc_img);
 
-        $imginfo = getimagesize('data:application/octet-stream;base64,' . $enc_img);
-
+            $image = date('YmdHis') . $_FILES['image']['name'];
+            move_uploaded_file($_FILES['image']['tmp_name'] , '../member_picture/'. $image);
+        }
         $_SESSION['join'] = $_POST;
         $_SESSION['join']['path'] = $imginfo['mime'];
         $_SESSION['join']['path_img'] = $enc_img;
-        $_SESSION['join']['image'] = $_FILES['image']['tmp_name'];
-        $_SESSION['join']['img_name'] = date('YmdHis') . $fileName;
+        //$_SESSION['join']['image'] =  $_FILES['image']['tmp_name'];
+        $_SESSION['join']['image'] =  $_FILES['image'];
+        $_SESSION['join']['img_name'] = date('YmdHis') . $_FILES['image']['name'];
+
         header('Location: check.php');
         exit();
     }else{

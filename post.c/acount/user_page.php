@@ -19,8 +19,16 @@ if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
     header('Location: ../login/index.php');
 }
 
+$ext = substr($member['picture'] , -3);
+
+if($ext == 'jpg' or $ext == 'gif') {
+    //$keywords['member_picture'] = $member['picture'];?>
+    <img src="../member_picture/<?php echo($member['picture']);?>" height="200" width="200">
+<?php
+}
+
 $keywords['member_name'] = $member['name'];
-$keywords['member_picture'] = $member['picture'];
+//$keywords['member_picture'] = $member['picture'];
 
 //html接続
 $html = file_get_contents('./user_page.html');
@@ -31,5 +39,5 @@ foreach($keywords as $key => $value) {
 
 print($html);
 
-var_dump($member['picture']);
+//var_dump($member['picture']);
 

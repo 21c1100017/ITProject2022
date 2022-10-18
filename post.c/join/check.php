@@ -15,12 +15,18 @@ if (!empty($_POST)) {
         password_hash($_SESSION['join']['password'] , PASSWORD_BCRYPT),
         $_SESSION['join']['img_name']
     ));
-    move_uploaded_file($_SESSION['join']['image'], '../member_picture/' . $_SESSION['join']['img_name']);
+
+    //$_FILES = $_SESSION["image"];
+
+    //move_uploaded_file($_FILES["image"]["tmp_name"], '../member_picture/' . $_SESSION['join']['img_name']);
+
     unset($_SESSION['join']);
 
     header('Location: thanks.php');
     exit();
 }
+
+
 ?>
 
 <form action="" method="post">
