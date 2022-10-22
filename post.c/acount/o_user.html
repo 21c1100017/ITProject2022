@@ -9,24 +9,14 @@
     <link rel="stylesheet" href="follow.css">
 </head>
 <body>
-    <h1>ユーザー2</h1>
+    <h1>{{nam}}</h1>
     <p>プロフィール</p>
-    <form  action="./follow2.php" method="POST">
+    <form  action="./otherusers_page.php" method="POST">
         <button  type="submit" name="follow" class="{{class}}">
             {{msg}}
         </button>
     </form>
-
-    <!--
-    <form action="follow.php" method="POST">
-        <button 
-            type="submit"
-            name="follow_lift"
-            value="true">
-            フォロー中
-        </button>
-    </form>
--->
-
+    <a href="./user_view.php">ユーザー一覧に戻る</a>
+    <a href="./user_page.php">ユーザーページに戻る</a>
 </body>
 </html>
