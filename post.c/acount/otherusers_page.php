@@ -3,7 +3,7 @@ session_start();
 require('../db/dbconnect.php');
 require('./follow.php');
 
-
+ini_set("error_reporting",0);
 
 //GETで送ったユーザーネームをセッションに保存
 
