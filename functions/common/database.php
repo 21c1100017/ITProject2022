@@ -21,7 +21,7 @@ class database {
     private $bind_array = [];
 
     public function connect(){
-        $config = require('../config/config.php');
+        $config = include('../config/config.php');
         try{
             $this->db_handler = new PDO(
                 "mysql:host=".$config["DB_HOST"].";dbname=".$config["DB_DATABASE"],
