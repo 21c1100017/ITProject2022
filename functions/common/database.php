@@ -21,7 +21,7 @@ class database {
     private $bind_array = [];
 
     public function connect(){
-        $config = include(__DIR__ . '/../config/config.php');
+        $config = include(__DIR__ . '/../../config/config.php');
         try{
             $this->db_handler = new PDO(
                 "mysql:host=".$config["DB_HOST"].";dbname=".$config["DB_DATABASE"],
@@ -47,7 +47,7 @@ class database {
     }
 
     public function setBindArray($array){
-        $this->bing_array = $array;
+        $this->bind_array = $array;
     }
 
     public function execute(){
@@ -57,7 +57,7 @@ class database {
             }
             $this->db_handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->db_statement = $this->db_handler->prepare($this->sql);
-            foreach($bind_array as $key => $value){
+            foreach($this->bind_array as $key => $value){
                 $this->db_statement->bindParam($key, $value);
             }
             $this->db_statement->execute();

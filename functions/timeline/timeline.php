@@ -1,6 +1,6 @@
 <?php
 
-require_once('../common/database.php');
+include_once(__DIR__ . '/../common/database.php');
 
 /**
  * 
@@ -14,11 +14,10 @@ require_once('../common/database.php');
 function get_posts(int $amount) : string {
 
     $db = new database();
-    $db->setSQL('SELECT * from `posts`');
+    $db->setSQL('SELECT * from `posts`;');
     $db->execute();
     $posts = $db->fetchAll();
 
-    var_dump($posts);
-    exit;
+    return $posts;
 
 }
