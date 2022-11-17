@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$config = include('../../config/config.php');
+$config = include(__DIR__ . '/../../config/config.php');
 
 if($config['DEBUG_MODE'] == true){
     ini_set('display_errors', 0);

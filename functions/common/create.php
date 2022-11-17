@@ -2,10 +2,10 @@
 
 function create_page(string $file_path, string $sub_title = '', array $heads = [], array $keywords = []) : string {
 
-    $base = file_get_contents('../../templates/base.html');
-    $html = file_get_contents('../../templates/' . $file_path);
+    $base = file_get_contents(__DIR__ . '/../../templates/base.html');
+    $html = file_get_contents(__DIR__ . '/../../templates/' . $file_path);
     $html = str_replace('{{body}}', $html, $base);
-    $title = include('../../config/config.php')['TITLE'];
+    $title = include(__DIR__ . '/../../config/config.php')['TITLE'];
     $head_html = '';
 
     if($sub_title != ''){

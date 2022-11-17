@@ -1,5 +1,7 @@
 <?php
 
+require_once('../common/database.php');
+
 /**
  * 
  * 投稿を取得します。
@@ -11,5 +13,12 @@
  */
 function get_posts(int $amount) : string {
 
-    
+    $db = new database();
+    $db->setSQL('SELECT * from `posts`');
+    $db->execute();
+    $posts = $db->fetchAll();
+
+    var_dump($posts);
+    exit;
+
 }
