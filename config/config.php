@@ -2,7 +2,7 @@
 
 return [
     'TITLE' => 'WIP',
-    'DB_HOST' => 'melonkun.jp',
+    'DB_HOST' => 'localhost',
     'DB_DATABASE' => 'wip',
     'DB_USER' => 'wip_admin',
     'DB_PASSWORD' => 'wip_admin',
