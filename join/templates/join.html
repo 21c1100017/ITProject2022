@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../statics/css/style.css">
+    <title>index.html</title>
+    
+</head>
+<body>
+    <p>次のフォームに必要事項をご記入ください</p>
+    <p>登録済みの方はこちらへ</p>
+    <a href="../login/index.php">ログイン</a>
+    <form action="" method="post" enctype="multipart/form-data">
+        <dl>
+            <dt>ニックネーム<span class="required">必須</span></dt>
+            <dd>
+                <input type="text" name="name" size="35" maxlength="255" value="{{post_name}}" />
+                <p class="error">{{err_name}}</p>
+            </dd>
+            <dt>メールアドレス<span class="required">必須</span></dt>
+            <dd>
+                <input type="text" name="email" size="35" maxlength="255"  value="{{post_email}}"/>
+                <p class="error">{{err_email}}</p>
+            </dd>
+            <dt>パスワード<span class="required">必須</span></dt>
+            <dd>
+                <input type="text" name="password" size="10" maxlength="20"  value="{{post_password}}"/>
+                <p class="error">{{err_password}}</p>
+                <p class="error">{{err_password_length}}</p>
+            </dd>
+            <dt>写真など</dt>
+            <dd>
+                <input type="file" name="image" size="35" />
+                <p class="error">{{err_image_type}}</p>
+                <p class="error">{{err_image}}</p>
+            </dd>
+        </dl>
+        <div>
+            <input type="submit" value="入力内容を確認する" />
+        </div>
+    </form>
+</body>
+</html>

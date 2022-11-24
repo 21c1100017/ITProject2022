@@ -1,0 +1,71 @@
+*{
+
+    font-size: 16px;
+
+}
+
+body {
+
+    background-color: aquamarine;
+
+    margin: 80px 240px;
+
+    text-align: center;
+
+    line-height: 20px;
+
+}
+
+
+
+.head p{
+
+    font-size: 24px;
+
+}
+
+
+
+dd{
+
+    margin: auto;
+
+}
+
+
+
+input[type="text"]{
+
+    border: 3px solid rgb(6, 102, 247);
+
+    border-radius: 1em;
+
+    padding: 0.5em;
+
+    background-color: white;
+
+    width: 14em;
+
+    height: 1.5em;
+
+    font-size: 1em;
+
+    line-height: 1;
+
+
+
+}
+
+
+
+.error {
+
+    color: red;
+
+}
+
+.required {
+
+    color: red;
+
+}
