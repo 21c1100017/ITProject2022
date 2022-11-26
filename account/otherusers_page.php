@@ -14,7 +14,6 @@ ini_set("error_reporting",0);
 */
 
 //GETで送ったユーザーネームをセッションに保存
-
 if (isset($_GET['name']) and $_SESSION['username'] != $_GET['name']) {
     $_SESSION['username'] = $_GET['name'];
 }

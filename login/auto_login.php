@@ -6,13 +6,19 @@ require_once('../init.php'); //最初に読み込む必須ファイルを追加�
 
 //トークン発行
 function setLoginToken ($user_id) {
-    //global $db; //グローバルでは使用しないため消去。
+
+    /*  使用しない為コメントアウト。
+    global $db;
+    */
+
     //重複チェック、データがあったら消去
     if (isset($_COOKIE['token'])) {
+
         /*  databaseクラスを使用するため記述変更。
         $st = $db->prepare('DELETE FROM sessions WHERE token=?');
         $st->execute(array($_COOKIE['token']));
         */
+
         $db = new database();
         $db->setSQL('DELETE FROM `sessions` WHERE token=?;');
         $db->setBindArray([$_COOKIE['token']]);
@@ -63,10 +69,6 @@ function auto_login() {
         session_regenerate_id(true);
         $_SESSION['id'] = $pass['id'];
         $_SESSION['time'] = time();
-        /*  URL変更
-        header('Location: account/user_page.php');
-        */
-        header('Location: ' . $root . 'account/user_page.php');
-        exit();
+        header('Location: ../account/user_page.php');
     }
 }

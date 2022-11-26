@@ -53,10 +53,7 @@ if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
 
 } else {
     //ログインしていない
-    /*  URL変更
     header('Location: ../login/index.php');
-    */
-    header('Location: ' . $root . 'login/index.php');
     exit;
 }
 

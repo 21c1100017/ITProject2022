@@ -35,22 +35,24 @@ function follow( $follow_id , $follower_id) {
     
     
 function followact($res , $follow_id , $follower_id) {
-    /*
+
+    /*  使用しないためコメントアウト。
     global $db;
     */
 
     if($res == false){
         //データがない場合
+
         $sql = 'INSERT INTO `follows` (`to_user_id`, `from_user_id`) VALUES (?, ?)';
         $msg = "フォロー解除";
         $class = "not";
-            
+
     }else{
         //データがある場合
         $sql = 'DELETE FROM `follows` WHERE `to_user_id` = ? AND `from_user_id` = ?';
         $msg = "フォローする";
         $class = "ok";
-        
+
     }
 
     /*  databaseクラスを使うため記述変更。

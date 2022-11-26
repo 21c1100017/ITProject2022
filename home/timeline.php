@@ -14,10 +14,10 @@ require_once('../init.php');
 function get_posts(int $amount) : array {
 
     $db = new database();
-    $db->setSQL('SELECT * from `posts`;');
+    $db->setSQL('SELECT * FROM `posts`;');
     $db->execute();
     $posts = $db->fetchAll();
 
-    return $posts;
+    return $posts[0];
 
 }
