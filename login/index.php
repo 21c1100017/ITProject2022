@@ -1,13 +1,8 @@
 <?php
 
-require_once('../init.php'); //最初に読み込む必須ファイルを追加。
-
-/*  init.phpに記載済みなので消去。
-session_start();
-require('../db/dbconnect.php');
-*/
-
-require('./auto_login.php');
+require_once('../init.php');
+require_once('./login.php');
+require_once('./auto_login.php');
 
 if (!empty($_COOKIE['token'])) {
     auto_login();
@@ -22,74 +17,32 @@ $keywords = [
     'err_failed' => ''
 ];
 
-//エラー発生フラグ
-$error = false;
+if(isset($_POST['email']) && isset($_POST['password'])){
 
-//var_dump($_POST);
-//exit;
+    $keywords['post_email'] = $_POST['email'];
+    $keywords['post_password'] = $_POST['password'];
 
-if (!empty($_POST)) {
-    //ログインの処理
-    if($_POST['email'] != '' && $_POST['password'] != '') {
+    if(isset($_POST['save'])){
 
-        /*  databaseクラスを使うため記述変更。
-        $login = $db->prepare('SELECT * FROM users WHERE email=? ');
-        $login->execute(array(
-            $_POST['email']
-        ));
-        $member = $login->fetch();
-        */
+        $res = login($_POST['email'], $_POST['password'], true);
 
-        $db = new database();
-        $db->setSQL('SELECT * FROM `users` WHERE `email`=?;');
-        $db->setBindArray([$_POST['email']]);
-        $db->execute();
-        $member = $db->fetch();
-
-        if (password_verify($_POST['password'],$member['password'])) {
-            $keywords['Password_valid'] = true;
-        }
-            //ログイン成功時
-            if($keywords['Password_valid']) {
-                $_SESSION['id'] = $member['id'];
-                $_SESSION['time'] = time();
-
-                    //ログイントークンの生成
-                    if ($_POST['save'] == 'on') {
-                        setLoginToken($member['id']);
-                    }
-                //session_regenerate_id(true);
-                header('Location: ../account/user_page.php');
-                exit();
-            } else {
-                $error['login'] = 'failed' ;
-            }
-    } else {
-        $error['login'] = 'blank' ;
     }
+
+    $res = login($_POST['email'], $_POST['password'], false);
+
 }
 
-//エラー処理
-if (!empty($error)){
-    $keywords['post_email'] = $_POST['email'] ;
-    $keywords['post_password'] = $_POST['password'] ;
+if($res){
 
-    if ($error['login'] == 'failed') {
-        $keywords['err_failed'] = 'ログインに失敗しました。正しくご記入ください。';
-    }
-    if ($error['login'] == 'blank') {
-        $keywords['err_failed'] = 'メールアドレスとパスワードをご記入ください';
-    }
-} 
+    header('Location: ../account/user_page.php');
+    exit;
 
-/*  create_page関数を使うため記述変更。
-//html接続
-$html = file_get_contents('./login.html');
+}else{
 
-foreach($keywords as $key => $value) {
-    $html = str_replace('{{' . $key . '}}', htmlspecialchars($value, ENT_QUOTES), $html);
+    $keywords['err_faloginiled'] = 'メールアドレス または パスワードが間違っています。';
+    $keywords['err_failed'] = 'メールアドレス または パスワードが間違っています。';
+
 }
-*/
 
 $html = create_page(
     $root . 'login/templates/login.html',
