@@ -1,9 +1,18 @@
 <?php
+
+require_once('../config.php');  //最初に読み込む必須ファイルを追加。
+
+/*  init.phpに記載済みなので消去。
 require_once("../db/dbconnect.php");
+*/
 
 function check() {
+
+    /* 使用しないため消去
     global $db;
     session_start();
+    */
+
     if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
         //ログインしている
         $_SESSION['time'] = time();

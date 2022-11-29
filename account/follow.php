@@ -29,6 +29,8 @@ function follow( $follow_id , $follower_id) {
     $res = $db->fetch();
 
     //DBにあればそれを、なければFALSEを返す
+    var_dump($res);
+    exit;
     return $res;
 
 }
