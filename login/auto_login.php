@@ -67,7 +67,7 @@ function auto_login() {
     //if ($pass = $st->fetch()) { 記述変更
     if ($pass = $db->fetch()){
         session_regenerate_id(true);
-        $_SESSION['id'] = $pass['id'];
+        $_SESSION['id'] = $pass['user_id'];
         $_SESSION['time'] = time();
         header('Location: ../account/user_page.php');
     }

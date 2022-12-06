@@ -37,8 +37,9 @@ if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
     $follow = $follows->fetchALL();
     */
 
-    $db->setSQL('SELECT * FROM `follow` WHERE `follow_id` = ? and `follower_id` = ?;');
+    $db->setSQL('SELECT * FROM `follows` WHERE `from_id` = ?');
     $db->setBindArray([$_SESSION['id']]);
+    $db->execute();
     $follow = $db->fetchAll();
 
     /* databaseクラスを使用するため記述変更。
@@ -47,8 +48,9 @@ if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
     $follower = $followers->fetchALL();
     */
 
-    $db->setSQL('SELECT * FROM `follows` WHERE `to_user_id` = ?;');
+    $db->setSQL('SELECT * FROM `follows` WHERE `to_id` = ?;');
     $db->setBindArray([$_SESSION['id']]);
+    $db->execute();
     $follower = $db->fetchAll();
 
 } else {
@@ -90,5 +92,5 @@ $html = create_page(
 print($html);
 
 //var_dump($follow);
-
+//var_dump($_SESSION['id']);
 //var_dump($member['picture']);

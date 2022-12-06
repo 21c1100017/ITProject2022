@@ -29,8 +29,6 @@ function follow( $follow_id , $follower_id) {
     $res = $db->fetch();
 
     //DBにあればそれを、なければFALSEを返す
-    var_dump($res);
-    exit;
     return $res;
 
 }
@@ -45,13 +43,13 @@ function followact($res , $follow_id , $follower_id) {
     if($res == false){
         //データがない場合
 
-        $sql = 'INSERT INTO `follows` (`to_user_id`, `from_user_id`) VALUES (?, ?)';
+        $sql = 'INSERT INTO `follows` (`to_id`, `from_id`) VALUES (?, ?)';
         $msg = "フォロー解除";
         $class = "not";
 
     }else{
         //データがある場合
-        $sql = 'DELETE FROM `follows` WHERE `to_user_id` = ? AND `from_user_id` = ?';
+        $sql = 'DELETE FROM `follows` WHERE `to_id` = ? AND `from_id` = ?';
         $msg = "フォローする";
         $class = "ok";
 
