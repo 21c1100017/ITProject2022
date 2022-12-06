@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once('../init.php'); //最初に読み込む必須ファイルを追加。
+require_once($_SERVER["DOCUMENT_ROOT"] . '/init.php'); //最初に読み込む必須ファイルを追加。
 
 //require(__DIR__ . '/../db/dbconnect.php'); //init.phpに記載済みなので消去。
 
@@ -50,6 +50,8 @@ function setLoginToken ($user_id) {
 //自動ログイン
 function auto_login() {
 
+    global $root;
+
     /*  使用しないため消去。
     global $db;
     */
@@ -66,9 +68,13 @@ function auto_login() {
 
     //if ($pass = $st->fetch()) { 記述変更
     if ($pass = $db->fetch()){
-        session_regenerate_id(true);
+        //session_regenerate_id(true);
         $_SESSION['id'] = $pass['user_id'];
         $_SESSION['time'] = time();
         header('Location: ../account/user_page.php');
+        exit;
+    }else{
+        header('Location: /account/logout.php');
+        exit;
     }
 }

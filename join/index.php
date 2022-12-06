@@ -111,7 +111,7 @@ if (!empty($_POST)) {
 
             $image = date('YmdHis') . $_FILES['image']['name'];
             //move_uploaded_file($_FILES['image']['tmp_name'] , '../member_picture/'. $image); //ファイルパス変更。
-            move_uploaded_file($_FILES['image']['tmp_name'] , $root . 'member_picture/'. $image);
+            move_uploaded_file($_FILES['image']['tmp_name'] , '../member_picture/'. $image);
         }
         $_SESSION['join'] = $_POST;
         $_SESSION['join']['path'] = $imginfo['mime'];

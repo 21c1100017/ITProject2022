@@ -1,5 +1,8 @@
 <?php
 
+header('Location: /');
+exit;
+
 require_once('../init.php');
 require_once('./timeline.php');
 
