@@ -1,11 +1,11 @@
 <?php
-	if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
-		$uri = 'https://';
-	} else {
-		$uri = 'http://';
+
+	require_once('./config.php');
+	require_once($root . 'login/auto_login.php');
+
+	if(!empty($_COOKIE['token'])){
+		auto_login();
+	}else{
+		header('Location: ./login');
+		exit;
 	}
-	$uri .= $_SERVER['HTTP_HOST'];
-	header('Location: '.$uri.'/dashboard/');
-	exit;
-?>
-Something is wrong with the XAMPP installation :-(
