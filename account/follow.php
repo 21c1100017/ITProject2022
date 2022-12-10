@@ -32,8 +32,7 @@ function follow( $follow_id , $follower_id) {
     return $res;
 
 }
-    
-    
+
 function followact($res , $follow_id , $follower_id) {
 
     /*  使用しないためコメントアウト。
