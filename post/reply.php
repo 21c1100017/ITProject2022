@@ -25,6 +25,13 @@ $db->setSQL('SELECT `content` FROM `posts` WHERE `id` = ?'); //追加
 $db->setBindArray([$id_number]); //追加
 $db->execute(); //追加
 $content = $db->fetch(); //追加
+    
+    
+/*
+
+    ここから先 未添削
+
+*/
 
 ?>
 
