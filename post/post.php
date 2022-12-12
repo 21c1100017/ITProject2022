@@ -12,19 +12,30 @@
 
 <?php
 
-require_once("./database.php");
+require_once('../init.php'); //追加
 
-session_start();
+//require_once("./database.php");   コメントアウト
+
+//session_start();  コメントアウト
 
 $user_id = 1;
 if(!isset($_SESSION["from_id_set"])):?>
 
 
 <?php
-$stmt = $mysql->prepare('INSERT INTO posts SET user_id =1, from_post_id=?, content =?, created_at =NOW()');
-$stmt->execute(array($_SESSION["from_id_set"], $_POST['content']));
+//$stmt = $mysql->prepare('INSERT INTO posts SET user_id =1, from_post_id=?, content =?, created_at =NOW()');   コメントアウト
+//$stmt->execute(array($_SESSION["from_id_set"], $_POST['content']));   コメントアウト
 
+$db = new database();   //追加
+$db->setSQL('INSERT INTO `posts` (`user_id`, `from_post_id`, `content`) VALUES (?, ?, ?)'); //追加
+$db->setBindArray([$user_id, $_SESSION["from_id_set"], $_POST['content']]); //追加
+$db->execute(); //追加
+    
+/*
 
+    ここから先 未添削
+    
+*/
 
 $stmt = $mysql->prepare('SELECT id,user_id,content FROM posts WHERE user_id =1');
 $stmt->execute();
