@@ -28,9 +28,8 @@ $content = $db->fetch(); //追加
 
 ?>
 
-<!--<article> コメントアウト -->
+<article>
 <?php foreach($stmt as $set): ?>
-<article> <!-- 追加 -->
     <p><?php print( $set[0]) ?></p>
 </article>
 <?php endforeach; ?>
