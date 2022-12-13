@@ -1,9 +1,6 @@
 <?php
 
-require_once('../init.php'); //最初に読み込む必須ファイルを追加。
-
-//session_start(); //init.phpに記載済みなので消去。
-//require('../db/dbconnect.php'); //init.phpに記載済みなので消去。
+require_once($_SERVER['DOCUMENT_ROOT'] . '/init.php');
 
 if(!isset($_SESSION['join'])) {
     header('Location: index.php');
@@ -11,18 +8,6 @@ if(!isset($_SESSION['join'])) {
 }
 
 if (!empty($_POST)) {
-
-    //databaseクラスを使うため記述変更。
-
-    /*
-    $statement = $db->prepare('INSERT INTO users SET name=?, email=?,password=?, picture=?, created_at=NOW()');
-    echo $ret = $statement -> execute(array(
-        $_SESSION['join']['name'],
-        $_SESSION['join']['email'],
-        password_hash($_SESSION['join']['password'] , PASSWORD_BCRYPT),
-        $_SESSION['join']['img_name']
-    ));
-    */
 
     $db = new database();
     $db->setSQL('INSERT INTO `users` SET `name`=:name, `email`=:email, `password`=:password, `picture`=:picture;');
@@ -35,11 +20,9 @@ if (!empty($_POST)) {
     $db->execute();
 
     //$_FILES = $_SESSION["image"];
-
     //move_uploaded_file($_FILES["image"]["tmp_name"], '../member_picture/' . $_SESSION['join']['img_name']);
 
     unset($_SESSION['join']);
-
     header('Location: thanks.php');
     exit();
 }

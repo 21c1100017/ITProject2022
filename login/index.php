@@ -1,8 +1,8 @@
 <?php
 
-require_once('../init.php');
-require_once('./login.php');
-require_once('./auto_login.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/init.php');
+require_once($root . 'login/login.php');
+require_once($root . 'login/auto_login.php');
 
 if (!empty($_COOKIE['token'])) {
     auto_login();
@@ -23,23 +23,17 @@ if(isset($_POST['email']) && isset($_POST['password'])){
     $keywords['post_password'] = $_POST['password'];
 
     if(isset($_POST['save'])){
-
         $res = login($_POST['email'], $_POST['password'], true);
-
     }
 
     $res = login($_POST['email'], $_POST['password'], false);
 
     if($res){
-
         header('Location: ../account/user_page.php');
         exit;
-    
     }else{
-    
         $keywords['err_faloginiled'] = 'メールアドレス または パスワードが間違っています。';
         $keywords['err_failed'] = 'メールアドレス または パスワードが間違っています。';
-    
     }
 }
 

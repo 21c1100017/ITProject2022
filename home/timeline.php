@@ -2,6 +2,9 @@
 
 require_once('../init.php');
 
+header('HTTP/1.0 404 Not Found');
+exit;
+
 /**
  * 
  * 投稿を取得します。

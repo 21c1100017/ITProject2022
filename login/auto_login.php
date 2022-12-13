@@ -1,39 +1,19 @@
 <?php
 
-require_once($_SERVER["DOCUMENT_ROOT"] . '/init.php'); //最初に読み込む必須ファイルを追加。
-
-//require(__DIR__ . '/../db/dbconnect.php'); //init.phpに記載済みなので消去。
+require_once($_SERVER['DOCUMENT_ROOT'] . '/init.php');
 
 //トークン発行
 function setLoginToken ($user_id) {
 
-    /*  使用しない為コメントアウト。
-    global $db;
-    */
-
     //重複チェック、データがあったら消去
     if (isset($_COOKIE['token'])) {
-
-        /*  databaseクラスを使用するため記述変更。
-        $st = $db->prepare('DELETE FROM sessions WHERE token=?');
-        $st->execute(array($_COOKIE['token']));
-        */
-
         $db = new database();
         $db->setSQL('DELETE FROM `sessions` WHERE token=?;');
         $db->setBindArray([$_COOKIE['token']]);
         $db->execute();
     }
-    //$sta = $db->prepare('DELETE FROM user_token WHERE id=?');
-    //$sta->execute(array($user_id));
 
     //テーブルトークン保存
-
-    /*  databaseクラスを使用するため記述変更。
-    $st = $db->prepare('INSERT INTO sessions (token, user_id, created_at) VALUES(?, ?, ?)');
-    $st-> execute(array($_COOKIE["PHPSESSID"], $user_id, date('Y-m-d H:i:s')));
-    */
-
     $db = new database();
     $db->setSQL('INSERT INTO `sessions` (`token`, `user_id`) VALUES(?, ?);');
     $db->setBindArray([
@@ -51,16 +31,6 @@ function setLoginToken ($user_id) {
 function auto_login() {
 
     global $root;
-
-    /*  使用しないため消去。
-    global $db;
-    */
-
-    /*  databaseクラスを使用するため記述変更。
-    $st = $db->prepare('SELECT * FROM sessions WHERE token=?');
-    $st->execute(array($_COOKIE["PHPSESSID"]));
-    */
-
     $db = new database();
     $db->setSQL('SELECT * FROM `sessions` WHERE `token`=?;');
     $db->setBindArray([$_COOKIE['PHPSESSID']]);

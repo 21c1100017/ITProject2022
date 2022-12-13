@@ -1,9 +1,6 @@
 <?php
 
-require_once('../init.php'); //最初に読み込む必須ファイルを追加。
-
-//session_start(); //init.phpに記載済みなので消去。
-//require('../db/dbconnect.php'); //init.phpに記載済みなので消去。
+require_once($_SERVER['DOCUMENT_ROOT'] . '/init.php');
 
 if (empty($_SESSION['join'])) {
     $_SESSION['join']['name'] = "";
@@ -71,20 +68,6 @@ if (!empty($_POST)) {
         }
     }
 
-    // classes.phpのDatabaseクラスを使うため記述変更。
-
-    /*
-    if (!$error) {
-        $member = $db->prepare ('SELECT * FROM users WHERE email=?');
-        $member -> execute(array($_POST['email']));
-        $record = $member->fetch();
-        if($record) {
-            $keywords['err_email'] = '指定されたメールアドレスはすでに登録されています';
-            $duplicatecheck = true;
-        }
-    }
-    */
-
     if(!$error){
         $db = new database();
         $db->setSQL('SELECT * FROM `users` WHERE `email` = :email');
@@ -127,18 +110,6 @@ if (!empty($_POST)) {
     }
 }
 
-// functions.phpのcreate_page関数を使用するため消去。
-
-/*
-// index.htmlのファイルを文字列として取得
-$html = file_get_contents('./join.html');
-
-// index.html内のキーワード( {{}}で囲まれてるやつ )をそれぞれの変数の中身と置き換える
-foreach($keywords as $key => $value) {
-    $html = str_replace('{{' . $key . '}}', htmlspecialchars($value, ENT_QUOTES), $html);
-}
-*/
-
 $html = create_page(
     $root . 'join/templates/join.html',
     'ユーザー登録',
@@ -148,5 +119,3 @@ $html = create_page(
 
 // 中身を置き換え終わったファイルを出力する
 print($html);
-
-// php終了タグ消去(消去タグ記載は推奨されていないため。)

@@ -1,10 +1,6 @@
 <?php
 
-require_once('../init.php'); //最初に読み込む必須ファイルを追加。
-
-/*  init.phpに記載済みなので消去。
-session_start();
-*/
+require_once($_SERVER['DOCUMENT_ROOT'] . '/init.php');
 
 $_SESSION = array();
 
@@ -16,5 +12,4 @@ if (isset($_COOKIE[session_name()])) {
 setcookie('token', '', time() - 42000, '/');
 //セッション削除
 session_destroy();
-
 header('Location: ../login/index.php');

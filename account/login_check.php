@@ -1,36 +1,31 @@
 <?php
 
-require_once('../config.php');  //最初に読み込む必須ファイルを追加。
-
-/*  init.phpに記載済みなので消去。
-require_once("../db/dbconnect.php");
-*/
+require_once($_SERVER['DOCUMENT_ROOT'] . '/init.php');
 
 function check() {
-
-    /* 使用しないため消去
-    global $db;
-    session_start();
-    */
-
-    if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
+    if(isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()){
         //ログインしている
         $_SESSION['time'] = time();
-    
-        $members = $db->prepare('SELECT * FROM users WHERE id=?');
-        $members -> execute(array($_SESSION['id']));
-        $member = $members -> fetch();
-    
+        $db = new database();
+
+        $db->setSQL('SELECT * FROM `users` WHERE id = ?');
+        $db->setBindArray([$_SESSION['id']]);
+        $db->execute();
+        $member = $db->fetch();
+
         //$follows = "SELECT * FROM `follow` WHERE `follow_id` = ? and `follower_id` = ?";
-        $follows = $db->prepare('SELECT * FROM follows WHERE from_user_id = ?');
-        $follows->execute(array($_SESSION['id']));
-        $follow = $follows->fetchALL();
-    
-        $followers = $db->prepare('SELECT * FROM follows WHERE to_user_id = ?');
-        $followers->execute(array($_SESSION['id']));
-        $follower = $followers->fetchALL();
+        $db->setSQL('SELECT * FROM `follows` WHERE `from_user_id` = ?');
+        $db->setBindArray([$_SESSION['id']]);
+        $db->execute();
+        $follow = $db->fetchALL();
+
+        $db->setSQL('SELECT * FROM `follows` WHERE `to_user_id` = ?');
+        $db->setBindArray([$_SESSION['id']]);
+        $db->execute();
+        $follower = $db->fetchALL();
     } else {
         //ログインしていない
-        header('Location: ../login/index.php');
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . '/login/index.php');
+        exit;
     }
 }
