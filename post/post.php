@@ -2,64 +2,53 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/init.php');
 
-$db = new database();
-$user_id = 1;
-
-if(!isset($_SESSION["from_id_set"])):?>
-
-
-<?php
+if(!isset($_POST['content'])){
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/post/reply.php');
+    exit;
+}
 
 $db = new database();
-$db->setSQL('INSERT INTO `posts` (`user_id`, `from_post_id`, `content`) VALUES (?, ?, ?)');
-$db->setBindArray([$user_id, $_SESSION["from_id_set"], $_POST['content']]);
-$db->execute();
-    
-/*
+$user_id = $_SESSION['id'];
+$box = '';
 
-    ここから先 未添削
-    
-*/
+if(!isset($_SESSION['from_id_set'])){
 
-$stmt = $mysql->prepare('SELECT id,user_id,content FROM posts WHERE user_id =1');
-$stmt->execute();
-$fetch = $stmt->fetchAll(PDO::FETCH_NUM);
-?>
+    $db = new database();
+    $db->setSQL('INSERT INTO `posts` (`user_id`, `from_post_id`, `content`) VALUES (?, ?, ?)');
+    $db->setBindArray([$user_id, $_SESSION["from_id_set"], $_POST['content']]);
+    $db->execute();
 
-<article>
-<?php foreach ($fetch as $test) :?>
-    <p>返信先>>なし<br><?php print( $test[1])?>( <a class="jump_id" href="reply.php?id=<?php print($test[0]);?>"><?php print( $test[2] );?></a> )</p>
-    <?php echo'<br>';?>
-</article>    
-<?php endforeach; ?>
+    $db->setSQL('SELECT `id`, `user_id`, `content` FROM `posts` WHERE `user_id` = ?');
+    $db->setBindArray([$user_id]);
+    $db->execute();
+    $fetch = $db->fetchAll();
 
+    foreach($fetch as $test){
+        $box = $box . '<p>返信先>>なし<br>' . $test[1] . '<a class="jump_id" href="replay.php"?id="' . $test[0] . '">' . $test[2] . '</a></p><br>';
+    }
 
+}else if(isset($_SESSION['from_id_set'])){
 
-<?php
-elseif(isset($_SESSION["from_id_set"])):?>
+    $db->setSQL('INSERT INTO posts (`user_id`, `from_post_id`, `content`) VALUES (?, ?, ?);');
+    $db->setBindArray([$user_id, $_SESSION['from_id_set'], $_POST['content']]);
+    $db->execute();
 
+    $db->setSQL('SELECT `id`, `user_id`, `content`, `from_post_id` FROM `posts` WHERE `user_id` = ?');
+    $db->setBindArray([$user_id]);
+    $db->execute();
+    $fetch = $db->fetchAll();
 
-<?php
-$stmt = $mysql->prepare('INSERT INTO posts SET user_id =1, from_post_id = ?, content =?, created_at =NOW()');
-$stmt->execute(array($_SESSION["from_id_set"], $_POST['content']));
+    foreach($fetch as $test){
+        $box = $box . '<p>返信先>><a href=".jump_id">' . $test[3] . '</a><br>' . $test[1] . '<a class="jump_id" href="replay.php"?id="' . $test[0] . '">' . $test[2] . '</a></p><br>';
+    }
 
+}
 
-    
+$html = create_page(
+    $root . 'post/templates/post.html',
+    '投稿',
+    [],
+    ['posts' => $box]
+);
 
-$stmt = $mysql->prepare('SELECT id,user_id,content,from_post_id FROM posts WHERE user_id =1');
-$stmt->execute();
-$fetch = $stmt->fetchAll(PDO::FETCH_NUM);
-?>"
-
-<article>
-<?php foreach ($fetch as $test) :?>
-    <p>返信先>><a href=".jump_id"><?php print($test[3])?></a><br><?php print( $test[1])?>( <a class="jump_id" href="reply.php?id=<?php print($test[0]);?>"><?php print( $test[2] );?></a> )</p>
-    <?php echo'<br>';?>
-</article>    
-<?php endforeach; ?>
-
-<?php endif; ?>
-
-
-</body>
-</html>
+print($html);
