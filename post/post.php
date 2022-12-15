@@ -24,7 +24,7 @@ if(!isset($_SESSION['from_id_set'])){
     $fetch = $db->fetchAll();
 
     foreach($fetch as $test){
-        $box = $box . '<p>返信先>>なし<br>' . $test[1] . '<a class="jump_id" href="replay.php"?id="' . $test[0] . '">' . $test[2] . '</a></p><br>';
+        $box = $box . '<p>返信先>>なし<br>' . $test[1] . '<a class="jump_id" href="reply.php?id=' . $test[0] . '">' . $test[2] . '</a></p><br>';
     }
 
 }else if(isset($_SESSION['from_id_set'])){
@@ -39,7 +39,7 @@ if(!isset($_SESSION['from_id_set'])){
     $fetch = $db->fetchAll();
 
     foreach($fetch as $test){
-        $box = $box . '<p>返信先>><a href=".jump_id">' . $test[3] . '</a><br>' . $test[1] . '<a class="jump_id" href="replay.php"?id="' . $test[0] . '">' . $test[2] . '</a></p><br>';
+        $box = $box . '<p>返信先>><a href=".jump_id">' . $test[3] . '</a><br>' . $test[1] . '<a class="jump_id" href="reply.php?id=' . $test[0] . '">' . $test[2] . '</a></p><br>';
     }
 
 }
@@ -52,3 +52,5 @@ $html = create_page(
 );
 
 print($html);
+
+var_dump($_SESSION);

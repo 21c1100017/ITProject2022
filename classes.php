@@ -35,10 +35,7 @@ class database {
             );
             date_default_timezone_set("Asia/Tokyo");
         }catch(\PDOException $e){
-            if($config["DEBUG_MODE"]){
-                echo $e->getMessage();
-                exit;
-            }
+
         }
         unset($config);
     }
@@ -63,15 +60,15 @@ class database {
             //}
             $this->db_statement->execute($this->bind_array);
         }catch(Exception $e){
-            //エラー処理
+
         }
     }
 
     public function fetch(){
-        return $this->db_statement->fetch(PDO::FETCH_ASSOC);
+        return $this->db_statement->fetch(PDO::FETCH_BOTH);
     }
 
     public function fetchAll(){
-        return $this->db_statement->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db_statement->fetchAll(PDO::FETCH_BOTH);
     }
 }
