@@ -47,15 +47,14 @@ function searchPosts(string $keyword = null, User $user = null, int $amount = 1)
     $bindArrays = [];
 
     if($keyword != null){
-        $query = '`content` LIKE %:keyword%';
-        $bindArrays['keyword'] = $keyword;
+        $query = ' WHERE `content` LIKE "%' . htmlspecialchars($keyword) . '%"';
     }
 
     if($user != null){
         if(empty($query)){
-            $query = '`user_id` = %' . $keyword . '%';
+            $query = ' WHERE `user_id` = ' . $user->getId();
         }else{
-            $query = $query . ' AND `user_id` = %' . $keyword . '%';
+            $query = $query . ' AND `user_id` = ' . $user->getId();
         }
     }
 

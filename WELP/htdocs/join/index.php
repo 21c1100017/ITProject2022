@@ -57,22 +57,30 @@ if (!empty($_POST)) {
         }
     }
 
-    if(($_FILES['image']['error'] != 0) or ($_FILES['image']['type'] != 'image/jpeg' and $_FILES['image']['type'] != 'image/png')){
-        $keywords['err_image_type'] = '「jpg/jpeg」または「png」形式の画像をアップロードしてください';
-        $error = true;
+    if($_FILES['image']['error'] != 4){
+        if(($_FILES['image']['error'] != 0) or ($_FILES['image']['type'] != 'image/jpeg' and $_FILES['image']['type'] != 'image/png')){
+            $keywords['err_image_type'] = '「jpg/jpeg」または「png」形式の画像をアップロードしてください';
+            $error = true;
+        }
+    }else{
+        $not_upload = true;
     }
 
     if(!$error){
-        $fp = fopen($_FILES['image']['tmp_name'], 'rb');
-        $img = fread($fp, filesize($_FILES['image']['tmp_name']));
-        fclose($fp);
         $_SESSION['join'] = $_POST;
-        $_SESSION['join']['image'] = [
-            'type' => $_FILES['image']['type'],
-            'tmp_content' => 'data:' . $_FILES['image']['type'] . ';base64,' . base64_encode($img),
-            'content' => file_get_contents($_FILES['image']['tmp_name']),
-            'size' => $_FILES['image']['size']
-        ];
+        if(empty($not_upload)){
+            $fp = fopen($_FILES['image']['tmp_name'], 'rb');
+            $img = fread($fp, filesize($_FILES['image']['tmp_name']));
+            fclose($fp);
+            $_SESSION['join']['image'] = [
+                'type' => $_FILES['image']['type'],
+                'tmp_content' => 'data:' . $_FILES['image']['type'] . ';base64,' . base64_encode($img),
+                'content' => file_get_contents($_FILES['image']['tmp_name']),
+                'size' => $_FILES['image']['size']
+            ];
+        }else{
+            $_SESSION['join']['image'] = null;
+        }
         header('Location: ' . $root_url . 'join/check.php');
         exit;
     }else{

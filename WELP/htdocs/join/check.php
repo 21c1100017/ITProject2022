@@ -11,19 +11,24 @@ if(empty($_SESSION['join'])){
 }
 
 if(isset($_GET['confirm'])){
-    $db = new Database();
-    $db->setSQL('INSERT INTO `images` (`image_type`, `image_content`, `image_size`) VALUES (:image_type, :image_content, :image_size);');
-    $db->setBindArray([
-        ':image_type' => $_SESSION['join']['image']['type'],
-        ':image_content' => $_SESSION['join']['image']['content'],
-        ':image_size' => $_SESSION['join']['image']['size']
+    if($_SESSION['join']['image'] != null){
+        $db = new Database();
+        $db->setSQL('INSERT INTO `images` (`image_type`, `image_content`, `image_size`) VALUES (:image_type, :image_content, :image_size);');
+        $db->setBindArray([
+            ':image_type' => $_SESSION['join']['image']['type'],
+            ':image_content' => $_SESSION['join']['image']['content'],
+            ':image_size' => $_SESSION['join']['image']['size']
     ]);
     $db->execute();
+    $image_id = $db->getLastInsertId();
+    }else{
+        $image_id = null;
+    }
     createUser(
         $_SESSION['join']['name'],
         $_SESSION['join']['email'],
         password_hash($_SESSION['join']['password'], PASSWORD_BCRYPT),
-        $db->getLastInsertId()
+        $image_id
     );
     unset($_SESSION['join']);
     header('Location: ' . $root_url . 'join/complete.php');
