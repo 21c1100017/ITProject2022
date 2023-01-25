@@ -48,8 +48,8 @@ class User
     public function unFavorite(int $post_id) : void
     {
         $db = new Database();
-        $db->setSQL('DELETE FROM `favorites` WHERE `post_id` = ?;');
-        $db->setBindArray([$post_id]);
+        $db->setSQL('DELETE FROM `favorites` WHERE `user_id` = ? AND `post_id` = ?;');
+        $db->setBindArray([$this->id, $post_id]);
         $db->execute();
     }
 

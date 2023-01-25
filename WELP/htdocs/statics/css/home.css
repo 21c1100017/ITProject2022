@@ -47,7 +47,8 @@
     border-right: 1px solid gray;
 }
 
-.favorite-button {
+.favorite-button,
+.button-detail {
     padding: 0;
     width: auto;
     text-align: right;
@@ -55,7 +56,8 @@
     margin-left: 20vw;
 }
 
-.favorite-button svg {
+.favorite-button svg,
+.button-detail svg {
     width: auto;
 }
 

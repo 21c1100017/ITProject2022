@@ -8,31 +8,18 @@ require_once($root . 'config/login_required.php');
 
 $posts = '';
 
-foreach(searchPosts(amount: 100) as $post){
-
-    $author = $post->getUser();
-    $iconPath = 'https://pics.prcm.jp/654b637d854c5/84936407/png/84936407.png';
-
-    if($author != null){
-        $name = $author->getName();
-        if($author->getPicture() != null){
-            $iconPath = $root_url . 'home/icon.php?id=' . $author->getPicture();
-        }
-    }else{
-        $name = '(消去されたユーザー)';
-    }
-
-    $posts = $posts . createPost(
-        $root . 'templates/home/post_box.html',
-        [
-            'icon_path' => $iconPath,
-            'name' => $name,
-            'created_at' => $post->getCreatedAt(),
-            'content' => $post->getContent(),
-            'favos' => $post->getFavorites(),
-            'post_id' => $post->getId()
-        ]
+if(isset($_POST['post-content'])){
+    sendPost(
+        getUserFromId($_SESSION['user_id']),
+        null,
+        $_POST['post-content']
     );
+    header('Location: ./');
+    exit;
+}
+
+foreach(searchPosts(amount: 100) as $post){
+    $posts = $posts . createPost($post->getId());
 }
 
 $html = create_page(

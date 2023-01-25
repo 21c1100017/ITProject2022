@@ -17,3 +17,7 @@
     display: table-cell;
     vertical-align: middle;
 }
+
+.icon.createpost {
+    margin: 0 auto;
+}
