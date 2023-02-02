@@ -64,6 +64,20 @@ class Post
         return $res[0];
     }
 
+    public function getReplies() : array
+    {
+        $posts = [];
+        $db = new Database();
+        $db->setSQL('SELECT `id` FROM `posts` WHERE `from_post_id` = ? ORDER BY `created_at` DESC');
+        $db->setBindArray([$this->id]);
+        $db->execute();
+        $res = $db->fetchAll();
+        foreach($res as $post){
+            $posts[] = getPost($post['id']);
+        }
+        return $posts;
+    }
+
     public function reply(String $content)
     {
 

@@ -18,7 +18,7 @@ if(isset($_POST['post-content'])){
     exit;
 }
 
-foreach(searchPosts(amount: 100) as $post){
+foreach(searchPosts(reply: false, amount: 100) as $post){
     $posts = $posts . createPost($post->getId());
 }
 

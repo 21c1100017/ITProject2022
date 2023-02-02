@@ -26,7 +26,7 @@ function getPost(int $id) : ?Post
     }
 
     if($post['from_post_id'] != null){
-        $from_post = getPost($post['from_id']);
+        $from_post = getPost($post['from_post_id']);
     }else{
         $from_post = null;
     }
@@ -40,7 +40,7 @@ function getPost(int $id) : ?Post
     );
 }
 
-function searchPosts(string $keyword = null, User $user = null, int $amount = 1) : array
+function searchPosts(string $keyword = null, User $user = null, bool $reply = true, int $amount = 1) : array
 {
 
     $resultPosts = [];
@@ -55,6 +55,14 @@ function searchPosts(string $keyword = null, User $user = null, int $amount = 1)
             $query = ' WHERE `user_id` = ' . $user->getId();
         }else{
             $query = $query . ' AND `user_id` = ' . $user->getId();
+        }
+    }
+
+    if(!$reply){
+        if(empty($query)){
+            $query = ' WHERE `from_post_id` IS NULL';
+        }else{
+            $query = $query . ' AND `from_post_id` IS NULL';
         }
     }
 
@@ -75,7 +83,7 @@ function searchPosts(string $keyword = null, User $user = null, int $amount = 1)
 
     foreach($result as $post){
         if($post['from_post_id'] != null){
-            $from_post = getPost($post['from_id']);
+            $from_post = getPost($post['from_post_id']);
         }else{
             $from_post = null;
         }

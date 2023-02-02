@@ -54,7 +54,8 @@ function createPost(int $post_id) : String
         'created_at' => $ago,
         'content' => $post->getContent(),
         'favos' => $post->getFavorites(),
-        'post_id' => $post->getId()
+        'post_id' => $post->getId(),
+        'replies' => count($post->getReplies())
     ];
 
     foreach($keywords as $key => $val){
@@ -64,3 +65,4 @@ function createPost(int $post_id) : String
     return $html;
 
 }
+
