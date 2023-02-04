@@ -12,15 +12,15 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../config/init.php');
 require_once($root . 'classes/database.php');
 require_once($root . 'classes/user.php');
 
-function createUser($name, $email, $password, $picture) : void
+function createUser(string $name, string $email, string $password, int $picture_id) : void
 {
     $db = new Database();
-    $db->setSQL('INSERT INTO `users` SET `name`=:name, `email`=:email, `password`=:password, `picture`=:picture;');
+    $db->setSQL('INSERT INTO `users` SET `name`=:name, `email`=:email, `password`=:password, `picture_id`=:picture_id;');
     $db->setBindArray([
         'name' => $name,
         'email' => $email,
         'password' => $password,
-        'picture' => $picture
+        'picture_id' => $picture_id
     ]);
     $db->execute();
 }
@@ -33,7 +33,7 @@ function deleteUser(User $user) : void
     $db->execute();
 }
 
-function getAllUsers()
+function getAllUsers() : array
 {
     $db = new Database();
     $db->setSQL('SELECT * FROM `users`;');
@@ -46,7 +46,8 @@ function getAllUsers()
             $user['id'],
             $user['name'],
             $user['email'],
-            $user['picture'],
+            $user['picture_id'],
+            $user['is_admin'],
             $user['created_at'],
             $user['updated_at']
         );
@@ -73,7 +74,8 @@ function getUserFromEmail(string $email) : ?User
         $user['id'],
         $user['name'],
         $user['email'],
-        $user['picture'],
+        $user['picture_id'],
+        $user['is_admin'],
         $user['created_at'],
         $user['updated_at']
     );
@@ -97,7 +99,8 @@ function getUserFromId(int $id) : ?User
         $user['id'],
         $user['name'],
         $user['email'],
-        $user['picture'],
+        $user['picture_id'],
+        $user['is_admin'],
         $user['created_at'],
         $user['updated_at']
     );

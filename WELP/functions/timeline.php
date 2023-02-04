@@ -29,7 +29,7 @@ function getFormattedCreatedAt(int $post_id) : String
 
 }
 
-function createPost(int $post_id) : String
+function createPost(int $post_id, int $user_id) : String
 {
     global $root, $root_url;
     $html = file_get_contents($root . 'templates/home/post_box.html');
@@ -39,14 +39,20 @@ function createPost(int $post_id) : String
 
     if($author != null){
         $name = $author->getName();
-        if($author->getPicture() != null){
-            $iconPath = $root_url . 'home/icon.php?id=' . $author->getPicture();
+        if($author->getPictureId() != null){
+            $iconPath = $root_url . 'home/icon.php?id=' . $author->getPictureId();
         }
     }else{
         $name = '(消去されたユーザー)';
     }
 
     $ago = getFormattedCreatedAt($post_id);
+
+    if(getUserFromId($user_id)->isFavorite($post->getId())){
+        $fill = 'red';
+    }else{
+        $fill = 'none';
+    }
 
     $keywords = [
         'icon_path' => $iconPath,
@@ -55,7 +61,9 @@ function createPost(int $post_id) : String
         'content' => $post->getContent(),
         'favos' => $post->getFavorites(),
         'post_id' => $post->getId(),
-        'replies' => count($post->getReplies())
+        'replies' => count($post->getReplies()),
+        'favorite_fill' => $fill,
+        'user_id' => $author->getId()
     ];
 
     foreach($keywords as $key => $val){

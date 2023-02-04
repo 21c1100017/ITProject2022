@@ -5,19 +5,21 @@ require_once($root . 'classes/database.php');
 
 class User
 {
-    private $id;
-    private $name;
-    private $email;
-    private $picture;
-    private $created_at;
-    private $updated_at;
+    private int $id;
+    private string $name;
+    private string $email;
+    private ?int $picture_id;
+    private bool $is_admin;
+    private string $created_at;
+    private string $updated_at;
 
-    public function __construct($id, $name, $email, $picture, $created_at, $updated_at)
+    public function __construct(int $id, string $name, string $email, ?int $picture_id, bool $is_admin, string $created_at, string $updated_at)
     {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
-        $this->picture = $picture;
+        $this->picture_id = $picture_id;
+        $this->is_admin = $is_admin;
         $this->created_at = $created_at;
         $this->updated_at = $updated_at;
     }
@@ -28,6 +30,11 @@ class User
         $db->setSQL('INSERT IGNORE INTO `favorites` (`user_id`, `post_id`) VALUES (?, ?);');
         $db->setBindArray([$this->id, $post_id]);
         $db->execute();
+    }
+
+    public function isAdmin() : bool
+    {
+        return $this->is_admin;
     }
 
     public function isFavorite(int $post_id) : bool
@@ -69,32 +76,52 @@ class User
         $db->execute();
     }
 
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
-    public function getEmail()
+    public function getEmail() : string
     {
         return $this->email;
     }
 
-    public function getPicture()
+    public function getFollowing() : int
     {
-        return $this->picture;
+        $db = new Database();
+        $db->setSQL('SELECT `id` FROM `follows` WHERE `from_id` = ?;');
+        $db->setBindArray([$this->id]);
+        $db->execute();
+        $res = $db->fetchAll();
+        return count($res);
     }
 
-    public function getCreatedAt()
+    public function getFollower() : int
+    {
+        $db = new Database();
+        $db->setSQL('SELECT `id` FROM `follows` WHERE `to_id` = ?;');
+        $db->setBindArray([$this->id]);
+        $db->execute();
+        $res = $db->fetchAll();
+        return count($res);
+    }
+
+    public function getPictureId() : ?int
+    {
+        return $this->picture_id;
+    }
+
+    public function getCreatedAt() : string
     {
         return $this->created_at;
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt() : string
     {
         return $this->updated_at;
     }
@@ -111,20 +138,20 @@ class User
         $this->save();
     }
 
-    public function setPicture(string $picture) : void
+    public function setPictureId(string $picture_id) : void
     {
-        $this->picture = $picture;
+        $this->picture_id = $picture_id;
         $this->save();
     }
 
     public function save() : void
     {
         $db = new Database();
-        $db->setSQL('UPDATE `users` SET `name` = :name, `email` = :email, `picture` = :picture, `updated_at` = NOW();');
+        $db->setSQL('UPDATE `users` SET `name` = :name, `email` = :email, `picture_id` = :picture_id, `updated_at` = NOW();');
         $db->setBindArray([
             'name' => $this->name,
             'email' => $this->email,
-            'picture' => $this->picture
+            'picture_id' => $this->picture_id
         ]);
         $db->execute();
     }

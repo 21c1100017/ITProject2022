@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-session_regenerate_id(true);
+//session_regenerate_id(true);
 
 global $root, $root_url;
 $root = $_SERVER['DOCUMENT_ROOT'] . '/../';

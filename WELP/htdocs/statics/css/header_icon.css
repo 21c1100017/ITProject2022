@@ -1,0 +1,19 @@
+.logo-area {
+    width: 80%;
+}
+
+.logo-area a {
+    margin-left: 20%;
+}
+
+.icon-area {
+    width: 20%;
+    display: flex;
+}
+
+.icon-area img {
+    width: auto;
+    height: auto;
+    margin: 15%;
+    border-radius: 50%;
+}
