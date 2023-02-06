@@ -22,13 +22,6 @@ if(isset($_POST['content'])){
 $author = $post->getUser();
 $replies = $post->getReplies();
 $repliesAsHTML = '';
-$picture_id = $author->getPictureId();
-
-if($picture_id != null){
-    $icon_path = '/home/icon.php?id=' . $picture_id;
-}else{
-    $icon_path = 'https://pics.prcm.jp/654b637d854c5/84936407/png/84936407.png';
-}
 
 foreach($replies as $reply){
     $repliesAsHTML = $repliesAsHTML . createPost($reply->getId(), $_SESSION['user_id']);
@@ -45,14 +38,15 @@ $html = create_page(
     '詳細',
     [],
     [
-        'icon_path' => $icon_path,
+        'icon_path' => $author->getPictureUrl(),
         'name' => $author->getName(),
         'created_at' => getFormattedCreatedAt($post->getId()),
         'content' => $post->getContent(),
         'replies' => $repliesAsHTML,
         'post_origin_id' => $post->getId(),
         'favorite_fill' => $fill
-    ]
+    ],
+    icon_path: getUserFromId($_SESSION['user_id'])->getPictureUrl()
 );
 
 print($html);

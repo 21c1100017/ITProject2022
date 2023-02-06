@@ -116,6 +116,16 @@ class User
         return $this->picture_id;
     }
 
+    public function getPictureUrl() : string
+    {
+        $picture_id = $this->getPictureId();
+        if($picture_id != null){
+            return '/home/icon.php?id=' . $picture_id;
+        }else{
+            return 'https://pics.prcm.jp/654b637d854c5/84936407/png/84936407.png';
+        }
+    }
+
     public function getCreatedAt() : string
     {
         return $this->created_at;
