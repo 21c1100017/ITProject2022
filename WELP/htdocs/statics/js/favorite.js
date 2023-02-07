@@ -8,7 +8,7 @@ $(function(){
             var post_id = btn.closest('.post-origin')[0].id;
         }
         $.ajax({
-            url: '../ajax/favorite.php',
+            url: '/ajax/favorite.php',
             type: 'POST',
             data: {'post_id': post_id},
             dataType: 'json'

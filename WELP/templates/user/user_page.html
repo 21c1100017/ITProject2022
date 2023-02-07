@@ -4,19 +4,15 @@
     <div class="info">
         <div class="info-icon">
             <img src="{{icon_path}}">
-            
         </div>
         <div class="info-name">
             <h2>{{name}}</h2>
         </div>
         <div class="info-labels">
-            <span class="following"><strong>{{following}}</strong> フォロー</span>
-            <span class="follower"><strong>{{follower}}</strong> フォロワー</span>
+            <span class="following"><strong id="following">{{following}}</strong> フォロー</span>
+            <span class="follower"><strong id="follower">{{follower}}</strong> フォロワー</span>
         </div>
-        <div class="info-buttons">
-            <button class="btn btn-outline-dark">フォロー</button>
-            <button class="btn btn-outline-dark">メッセージ</button>
-        </div>
+        {{block}}
     </div>
     <div class="posts">
         {{posts}}
@@ -24,3 +20,4 @@
 </div>
 
 <script src="/statics/js/favorite.js"></script>
+<script src="/statics/js/follow.js"></script>

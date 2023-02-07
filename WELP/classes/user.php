@@ -24,17 +24,17 @@ class User
         $this->updated_at = $updated_at;
     }
 
+    public function isAdmin() : bool
+    {
+        return $this->is_admin;
+    }
+
     public function favorite(int $post_id) : void
     {
         $db = new Database();
         $db->setSQL('INSERT IGNORE INTO `favorites` (`user_id`, `post_id`) VALUES (?, ?);');
         $db->setBindArray([$this->id, $post_id]);
         $db->execute();
-    }
-
-    public function isAdmin() : bool
-    {
-        return $this->is_admin;
     }
 
     public function isFavorite(int $post_id) : bool
@@ -66,6 +66,20 @@ class User
         $db->setSQL('INSERT INTO `follows` (`from_id`, `to_id`) VALUES (?, ?)');
         $db->setBindArray([$this->id, $to_user->getId()]);
         $db->execute();
+    }
+
+    public function isFollow(User $to_user) : bool
+    {
+        $db = new Database();
+        $db->setSQL('SELECT `id` FROM `follows` WHERE `from_id` = ? AND `to_id` = ?');
+        $db->setBindArray([$this->id, $to_user->getId()]);
+        $db->execute();
+        $res = $db->fetch();
+        if(!$res){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public function unFollow(User $to_user) : void
@@ -157,11 +171,12 @@ class User
     public function save() : void
     {
         $db = new Database();
-        $db->setSQL('UPDATE `users` SET `name` = :name, `email` = :email, `picture_id` = :picture_id, `updated_at` = NOW();');
+        $db->setSQL('UPDATE `users` SET `name` = :name, `email` = :email, `picture_id` = :picture_id, `updated_at` = NOW() WHERE `id` = :id;');
         $db->setBindArray([
             'name' => $this->name,
             'email' => $this->email,
-            'picture_id' => $this->picture_id
+            'picture_id' => $this->picture_id,
+            'id' => $this->id
         ]);
         $db->execute();
     }
