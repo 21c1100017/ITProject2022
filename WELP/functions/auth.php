@@ -9,6 +9,7 @@
  */
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../config/init.php');
+require_once($root . 'classes/database.php');
 require_once($root . 'functions/user.php');
 
 function auto_login()

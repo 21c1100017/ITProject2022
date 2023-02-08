@@ -1,10 +1,10 @@
 <div class="setting">
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <div class="input-group">
             <label class="mb-3" for="inputImage">
-                <img src="{{icon_path}}">
+                <img id="icon" src="{{icon_path}}">
             </label>
-            <input type="file" class="from-control" id="inputImage" name="icon">
+            <input type="file" class="from-control" id="inputImage" name="icon" accept="image/*">
         </div>
         <div class="input-group flex-nowrap mb-3">
             <span class="input-group-text" id="addon-wrapping">ユーザー名</span>
@@ -20,3 +20,4 @@
     <a href="/setting/user_delete.php"><button class="btn btn-danger mb-3">アカウントを消去する</button></a>
 </div>
 <link rel="stylesheet" href="/statics/css/setting.css">
+<script src="/statics/js/setting.js"></script>

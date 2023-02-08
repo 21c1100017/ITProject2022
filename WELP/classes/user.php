@@ -162,7 +162,7 @@ class User
         $this->save();
     }
 
-    public function setPictureId(string $picture_id) : void
+    public function setPictureId(int $picture_id) : void
     {
         $this->picture_id = $picture_id;
         $this->save();

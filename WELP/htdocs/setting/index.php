@@ -8,6 +8,9 @@ require_once($root . 'config/login_required.php');
 $user = getUserFromId($_SESSION['user_id']);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if(isset($_FILES['icon']) and $_FILES['icon']['error'] == 0){
+        changeImage($user, $_FILES['icon']['type'], file_get_contents($_FILES['icon']['tmp_name']), $_FILES['icon']['size'],);
+    }
     if(isset($_POST['name'])){
         $user->setName($_POST['name']);
     }

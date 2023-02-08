@@ -12,6 +12,23 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../config/init.php');
 require_once($root . 'classes/database.php');
 require_once($root . 'classes/user.php');
 
+function changeImage(User $user, string $file_type, string $file_content, string $file_size) : void
+{
+    $old_picture_id = $user->getPictureId();
+    $db = new Database();
+    $db->setSQL('INSERT INTO `images` SET `image_type`=:image_type, `image_content`=:image_content, `image_size`=:image_size;');
+    $db->setBindArray([
+        'image_type' => $file_type,
+        'image_content' => $file_content,
+        'image_size' => $file_size
+    ]);
+    $db->execute();
+    $user->setPictureId($db->getLastInsertId());
+    $db->setSQL('DELETE FROM `images` WHERE `id` = ?;');
+    $db->setBindArray([$old_picture_id]);
+    $db->execute();
+}
+
 function createUser(string $name, string $email, string $password, int $picture_id) : void
 {
     $db = new Database();
