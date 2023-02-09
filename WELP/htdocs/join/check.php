@@ -48,7 +48,7 @@ $html = create_page(
     [
         'check_css' => $root_url . 'statics/css/check.css',
         'name' => htmlspecialchars($_SESSION['join']['name'], ENT_QUOTES),
-        'email' => htmlspecialchars($_SESSION['join']['name'], ENT_QUOTES),
+        'email' => htmlspecialchars($_SESSION['join']['email'], ENT_QUOTES),
         'img' => $img
     ],
     false

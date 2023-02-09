@@ -29,7 +29,7 @@ function changeImage(User $user, string $file_type, string $file_content, string
     $db->execute();
 }
 
-function createUser(string $name, string $email, string $password, int $picture_id) : void
+function createUser(string $name, string $email, string $password, ?int $picture_id) : void
 {
     $db = new Database();
     $db->setSQL('INSERT INTO `users` SET `name`=:name, `email`=:email, `password`=:password, `picture_id`=:picture_id;');
