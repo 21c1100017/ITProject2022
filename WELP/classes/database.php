@@ -25,7 +25,7 @@ class Database {
         $config = require($root . 'config/config.php');
         try{
             $this->db_handler = new PDO(
-                "mysql:host=".$config["DB_HOST"].";dbname=".$config["DB_NAME"],
+                "mysql:host=".$config["DB_HOST"].";dbname=".$config["DB_NAME"].';charset=utf8mb4',
                 $config["DB_USER"],
                 $config["DB_PASSWORD"],
                 [
