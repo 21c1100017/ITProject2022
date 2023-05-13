@@ -40,6 +40,13 @@ class Database {
         unset($config);
     }
 
+    public function bad_query($sql) : PDOStatement | false {
+        if(empty($this->db_handler)){
+            $this->connect();
+        }
+        return $this->db_handler->query($sql);
+    }
+
     public function setSQL($sql){
         $this->sql = $sql;
     }

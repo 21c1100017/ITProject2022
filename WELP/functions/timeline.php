@@ -67,7 +67,7 @@ function createPost(int $post_id, int $user_id) : String
     ];
 
     foreach($keywords as $key => $val){
-        $html = str_replace('{{' . $key . '}}', htmlspecialchars($val, ENT_QUOTES), $html);
+        $html = str_replace('{{' . $key . '}}', $val, $html);
     }
 
     return $html;

@@ -27,7 +27,8 @@ if(isset($_GET['confirm'])){
     createUser(
         $_SESSION['join']['name'],
         $_SESSION['join']['email'],
-        password_hash($_SESSION['join']['password'], PASSWORD_BCRYPT),
+        //password_hash($_SESSION['join']['password'], PASSWORD_BCRYPT),
+        $_SESSION['join']['password'], //bad
         $image_id
     );
     unset($_SESSION['join']);

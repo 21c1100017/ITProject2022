@@ -4,6 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../config/init.php');
 require_once($root . 'functions/common.php');
 require_once($root . 'functions/auth.php');
 require_once($root . 'functions/user.php');
+require_once($root . 'classes/database.php');
 
 if(isset($_SESSION['user_id'])){
     if(getUserFromId($_SESSION['user_id']) != null){
@@ -24,20 +25,30 @@ $keywords = [
 
 if( isset($_POST['email']) && isset($_POST['password']) ){
 
-    $keywords['post_email'] = $_POST['email'];
-    $keywords['post_password'] = $_POST['password'];
+    $email = $keywords['post_email'] = $_POST['email'];
+    $password = $keywords['post_password'] = $_POST['password'];
 
-    if(isset($_POST['save'])){
-        $res = login($_POST['email'], $_POST['password'], true);
-    }else{
-        $res = login($_POST['email'], $_POST['password'], false);
+    try {
+        $sql = "SELECT id FROM users WHERE email = '$email' AND password = '$password';";
+        $db = new Database();
+        $stmt = $db->bad_query($sql);
+        $res = $stmt->fetch();
+    } catch(PDOException $e) {
+        $res = false;
     }
 
-    if($res){
+    if($res == false){
+        $keywords['alert'] = '';
+        if(isset($e)){
+            $keywords['reason'] = $e;
+        }else{
+            $keywords['reason'] = "ログインに失敗しました！";
+        }
+        
+    }else{
+        $_SESSION['user_id'] = $res["id"];
         header('Location: ' . $root_url . 'home');
         exit;
-    }else{
-        $keywords['alert'] = '';
     }
 }
 

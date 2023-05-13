@@ -67,3 +67,10 @@
     text-align: left;
     width: 50%;
 }
+
+@media screen and (min-width: 960px) {
+    .favorite-button, .button-detail {
+        margin-right: 5%;
+        margin-left: 40%;
+    }
+}

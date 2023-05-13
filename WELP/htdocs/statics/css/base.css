@@ -64,7 +64,7 @@ a:active {
 }
 
 .logo img {
-    width: 30vw;
+    width: 40%;
     margin: 0;
 }
 
@@ -77,4 +77,22 @@ a:active {
 
 .content::-webkit-scrollbar {
     display: none;
+}
+
+@media screen and (min-width: 481px) {
+	/* 481px以上に適用されるCSS（タブレット用） */
+}
+
+@media screen and (min-width: 960px) {
+    .logo img {
+        width: 60%;
+        margin: 0;
+    }
+
+	.wrapper {
+        width: 40%;
+        margin: 0 30%;
+        border-left: 1px solid #000;
+        border-right: 1px solid #000;
+    }
 }

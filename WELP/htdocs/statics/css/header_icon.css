@@ -21,3 +21,9 @@
 .dropdown-menu {
     min-width: 50vw;
 }
+
+@media screen and (min-width: 960px) {
+    .logo-area a {
+        margin-left: 10%;
+    }
+}

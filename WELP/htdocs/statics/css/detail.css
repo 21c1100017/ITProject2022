@@ -121,3 +121,9 @@
     text-align: left;
     width: 50%;
 }
+
+@media screen and (min-width: 960px) {
+    .post-origin .icon img {
+        width: 90%;
+    }
+}

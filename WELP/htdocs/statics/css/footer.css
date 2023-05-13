@@ -21,3 +21,9 @@
 .icon.createpost {
     margin: 0 auto;
 }
+
+@media screen and (min-width: 960px) {
+    .footer {
+        width: 39.8%;
+    }
+}
