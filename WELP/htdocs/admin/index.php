@@ -3,18 +3,19 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../config/init.php');
 require_once($root . 'functions/common.php');
 require_once($root . 'functions/post.php');
-require_once($root . 'config/login_required.php');
+// require_once($root . 'config/login_required.php');
 
 $user = getUserFromId($_SESSION['user_id']);
 
-if(!$user->isAdmin()){
+
+/* if(!$user->isAdmin()){
     header('Location: /');
     exit;
-}
+} */
 
 $rows = '';
 
-foreach(searchPosts(reply: false, amount: 9999) as $post){
+foreach(searchPosts(reply: true, amount: 9999) as $post){
     $rows = $rows . '<tr>';
     $rows = $rows . '<td>' . $post->getId() . '</td>';
     $rows = $rows . '<td>' . $post->getUser()->getId() . '</td>';
