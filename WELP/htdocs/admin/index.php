@@ -5,7 +5,7 @@ require_once($root . 'functions/common.php');
 require_once($root . 'functions/post.php');
 // require_once($root . 'config/login_required.php');
 
-$user = getUserFromId($_SESSION['user_id']);
+// $user = getUserFromId($_SESSION['user_id']);
 
 
 /* if(!$user->isAdmin()){

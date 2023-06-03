@@ -4,7 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../config/init.php');
 require_once($root . 'functions/post.php');
 // require_once($root . 'config/login_required.php');
 
-$user = getUserFromId($_SESSION['user_id']);
+// $user = getUserFromId($_SESSION['user_id']);
 
 /* if(!$user->isAdmin()){
     header('Location: /');
