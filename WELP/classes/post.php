@@ -39,7 +39,7 @@ class Post
         return $this->user;
     }
 
-    public function getFromPost() : Post
+    public function getFromPost() : ?Post
     {
         return $this->from_post;
     }
